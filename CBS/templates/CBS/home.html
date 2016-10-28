@@ -1,0 +1,78 @@
+{%extends 'basic.html'%}
+{% block title %}Home{% endblock title %}
+{% block content %}
+	<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+		<div class="row">
+			<legend>Book a ride</legend>
+			<p class="lead">Select a station</p>
+			<form action="/Bike_share/home/" method="post">
+				{% csrf_token %}
+				{% for field in form %}
+				{{field}}
+			{% endfor %}
+			</br>
+			<button type="submit" class="btn btn-primary">Book</button>
+			</form>
+		</div>
+		<div class="row">
+			{% if booking_list %}
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Booking time</th>
+							<th>Booking station</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for times,station in booking_list %}
+						<tr>
+							<td>{{times}}</td>
+							<td>{{station}}</td>
+						</tr>
+					{% endfor %}
+						
+					</tbody>
+				</table>
+			{% else %}
+				
+			{% endif %}
+		</div>
+	</div>
+	<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+		
+	</div>
+	{% if bikes %}
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+		<div class="row">
+			<form action="/ride/" method="POST" role="form">
+			{% csrf_token %}
+				<legend>Start the ride</legend>
+				
+				<div class="form-group">
+								<p class="lead">Select a bike</p>
+								<select class="form-control" id="bikes" name="bike_no">
+								{% for bike in bikes %}
+									<option>{{bike.bike_name}}</option>
+								{% endfor %}
+								</select>
+				</div>
+				<input type="hidden" name="booking_id" value="{{recent_booking.pk}}"></input>
+				<button type="submit" class="btn btn-primary">Start Ride</button>
+			</form>
+		</div>
+	</div>
+	{% else %}
+		<p class="lead">No rides booked. Book a ride to use the service</p>
+	{% endif %}
+{% endblock content %}
+
+
+{% block script %}
+	<script type="text/javascript">
+	function changeclass() {
+ document.getElementById("id_booking_station").classList.add('form-control');
+
+}
+	window.onload = changeclass();
+	</script>
+{% endblock script %}

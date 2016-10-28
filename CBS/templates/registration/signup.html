@@ -1,0 +1,23 @@
+{% extends "unsigned_basic.html" %}
+
+{% block content %}
+	<div class="voffset6">
+		<form action="" method="post">
+		{% csrf_token %}
+		<legend>Signup</legend>
+		{% for field in form %}
+			<div class="form-group">
+				{% for error in field.errors %}
+					<p class="bg-danger">{{ error }}</p>
+				{% endfor %}
+				<h3>{{field.label}}</h3>
+				{{field}}
+				<small>{{field.help_text}}</small>
+			</div>
+		{% endfor %}
+    
+  <input type="submit" class="btn btn-primary" value="Signup" />
+
+  </form>
+	</div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{%extends 'basic.html'%}
+{% block title %}Riding{% endblock title %}
+
+{% block content %}
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		<form action="/endRide/" method="POST" role="form">
+			<legend>Current ride</legend>
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="">Booking Time:</label>
+				<p>{{current_ride.booking_time}}</p>
+			</div>
+			<div class="form-group">
+				<label for="">Booking Station:</label>
+				<p>{{current_ride.booking_station}}</p>
+			</div>
+			<div class="form-group">
+				<label for="">Booked Bike:</label>
+				<p>{{current_ride.booking_bike}}</p>
+			</div>
+			
+			<input type="hidden" name="booking_id" id="inputBooking_id" class="form-control" value="{{current_ride.pk}}">
+			<input type="hidden" name="bike_no" id="inputBike_no" class="form-control" value="{{current_ride.booking_bike}}">
+			<button type="submit" class="btn btn-primary">End Ride</button>
+		</form>
+	</div>
+{% endblock content %}
